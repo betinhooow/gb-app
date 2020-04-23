@@ -3,6 +3,6 @@ import appointmentsRouter from './appointments.route';
 
 const routes = Router();
 
-routes.use('/appointment', appointmentsRouter);
+routes.use('/appointments', appointmentsRouter);
 
 export default routes;
