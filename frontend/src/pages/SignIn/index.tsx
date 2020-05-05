@@ -8,7 +8,7 @@ import logoImg from '../../assets/icons/logo.svg';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 import getValidationErrors from '../../utils/getvalidationErrors';
-import { useAuth } from '../../context/authContext';
+import { useAuth } from '../../hooks/authContext';
 
 interface FormDataCredentials {
   email: string;
