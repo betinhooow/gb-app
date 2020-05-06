@@ -8,8 +8,8 @@ import logoImg from '../../assets/icons/logo.svg';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 import getValidationErrors from '../../utils/getvalidationErrors';
-import { useAuth } from '../../hooks/authContext';
-import ToastContainer from '../../components/Toast';
+import { useAuth } from '../../hooks/auth';
+import { useToast } from '../../hooks/toast';
 
 interface FormDataCredentials {
   email: string;
@@ -18,7 +18,9 @@ interface FormDataCredentials {
 
 const SignIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
+
   const { signIn } = useAuth();
+  const { showToast } = useToast();
 
   const handleSubmit = useCallback(
     async (data: FormDataCredentials) => {
@@ -35,12 +37,13 @@ const SignIn: React.FC = () => {
           abortEarly: false,
         });
 
-        signIn({ email: data.email, password: data.password });
+        await signIn({ email: data.email, password: data.password });
       } catch (err) {
-        if(err instanceof Yup.ValidationError){
+        if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
           formRef.current?.setErrors(errors);
         }
+        showToast();
       }
     },
     [signIn],
@@ -69,7 +72,6 @@ const SignIn: React.FC = () => {
           <FiLogIn />
           Criar conta
         </a>
-    <ToastContainer/>
       </Content>
       <Background />
     </Container>

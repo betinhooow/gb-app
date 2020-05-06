@@ -26,7 +26,6 @@ const ToastTypeVariation = {
   `,
 }
 
-
 export const Toast = styled.div<ToastProps>`
   width: 360px;
 
