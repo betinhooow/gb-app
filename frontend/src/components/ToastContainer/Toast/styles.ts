@@ -1,32 +1,25 @@
-import styled, { css } from "styled-components";
+import styled, { css } from 'styled-components';
 
-interface ToastProps {
+interface ContainerProps {
   type: 'success' | 'error' | 'info';
 }
 
-export const Container = styled.div`
-  position:absolute;
-  right: 0;
-  top: 0;
-  padding: 30px;
-  overflow: hidden;
-`
 const ToastTypeVariation = {
   info: css`
     background: #ebf8ff;
     color: #3172b7;
   `,
   error: css`
-    background: #e6fffa;
-    color: #2e656a;
-  `,
-  success: css`
     background: #fddede;
     color: #c53030;
   `,
-}
+  success: css`
+    background: #e6fffa;
+    color: #2e656a;
+  `,
+};
 
-export const Toast = styled.div<ToastProps>`
+export const Container = styled.div<ContainerProps>`
   width: 360px;
 
   position: relative;
@@ -37,7 +30,7 @@ export const Toast = styled.div<ToastProps>`
   display: flex;
 
   & + div {
-    margin-top: 8px
+    margin-top: 8px;
   }
 
   ${props => ToastTypeVariation[props.type]}
@@ -53,7 +46,7 @@ export const Toast = styled.div<ToastProps>`
       margin-top: 4px;
       font-size: 14px;
       opacity: 0.8;
-      line-height: 20px
+      line-height: 20px;
     }
   }
 
@@ -66,4 +59,4 @@ export const Toast = styled.div<ToastProps>`
     background: transparent;
     color: inherit;
   }
-`
+`;
