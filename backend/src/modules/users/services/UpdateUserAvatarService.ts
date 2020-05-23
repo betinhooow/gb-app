@@ -1,3 +1,4 @@
+import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import { getRepository } from 'typeorm';
 import path from 'path';
 import fs from 'fs';
@@ -5,13 +6,15 @@ import User from '@modules/users/infra/typeorm/entities/User';
 import uploadConfig from '@config/upload';
 import AppError from '@shared/error/AppError';
 
-interface Request {
+interface IRequest {
   user_id: string;
   avatarFileName: string;
 }
 
 class UpdateUserAvatarService {
-  public async execute({ user_id, avatarFileName }: Request): Promise<User> {
+  constructor(private usersRepository: IUsersRepository) {}
+
+  public async execute({ user_id, avatarFileName }: IRequest): Promise<User> {
     const userRepository = getRepository(User);
 
     const user = await userRepository.findOne(user_id);
