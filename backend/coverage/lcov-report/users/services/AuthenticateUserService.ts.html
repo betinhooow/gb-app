@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for users/services/UpdateUserAvatarService.ts</title>
+    <title>Code coverage report for users/services/AuthenticateUserService.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,20 +19,20 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">users/services</a> UpdateUserAvatarService.ts</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">users/services</a> AuthenticateUserService.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/26</span>
+                <span class='fraction'>0/24</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/7</span>
+                <span class='fraction'>0/5</span>
             </div>
         
             
@@ -102,7 +102,10 @@
 <a name='L43'></a><a href='#L43'>43</a>
 <a name='L44'></a><a href='#L44'>44</a>
 <a name='L45'></a><a href='#L45'>45</a>
-<a name='L46'></a><a href='#L46'>46</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -124,23 +127,26 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -148,50 +154,53 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import IUsersRepository from '@modules/users/repositories/IUsersRepository';
-<span class="cstat-no" title="statement not covered" >import path from 'path';</span>
-<span class="cstat-no" title="statement not covered" >import fs from 'fs';</span>
+<span class="cstat-no" title="statement not covered" >import { compare } from 'bcryptjs';</span>
+<span class="cstat-no" title="statement not covered" >import { sign } from 'jsonwebtoken';</span>
 import User from '@modules/users/infra/typeorm/entities/User';
-<span class="cstat-no" title="statement not covered" >import uploadConfig from '@config/upload';</span>
+<span class="cstat-no" title="statement not covered" >import auth from '@config/auth';</span>
 <span class="cstat-no" title="statement not covered" >import AppError from '@shared/error/AppError';</span>
 <span class="cstat-no" title="statement not covered" >import { inject, injectable } from 'tsyringe';</span>
 &nbsp;
 interface IRequest {
-  user_id: string;
-  avatarFileName: string;
+  email: string;
+  password: string;
 }
 &nbsp;
 @injectable()
-<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >class <span class="cstat-no" title="statement not covered" >U</span></span>pdateUserAvatarService {</span>
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >class <span class="cstat-no" title="statement not covered" >A</span></span>uthenticateUserService {</span>
 <span class="fstat-no" title="function not covered" >  constructor(</span>
     @inject('UsersRepository')
     private <span class="cstat-no" title="statement not covered" >usersRepository: IUsersRepository,</span>
   ) {}
 &nbsp;
-<span class="fstat-no" title="function not covered" >  public async <span class="cstat-no" title="statement not covered" >e</span>xecute({ <span class="cstat-no" title="statement not covered" >user_id,</span> <span class="cstat-no" title="statement not covered" >avatarFileName </span>}: IRequest): Promise&lt;User&gt; {</span>
-    const <span class="cstat-no" title="statement not covered" >user = <span class="cstat-no" title="statement not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >await this.usersRepository.findById(user_id);</span></span></span>
+<span class="fstat-no" title="function not covered" >  public async <span class="cstat-no" title="statement not covered" >e</span>xecute({</span>
+<span class="cstat-no" title="statement not covered" >    email,</span>
+<span class="cstat-no" title="statement not covered" >    password,</span>
+  }: IRequest): Promise&lt;{ user: User; token: string }&gt; {
+    const <span class="cstat-no" title="statement not covered" >user = <span class="cstat-no" title="statement not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >await this.usersRepository.findByEmail(email);</span></span></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    if (!user) {</span>
-<span class="cstat-no" title="statement not covered" >      throw new AppError('Only authenticated users can change avatar', 401);</span>
+<span class="cstat-no" title="statement not covered" >      throw new AppError('Incorret email/password combination.', 401);</span>
     }
 &nbsp;
-    if (<span class="cstat-no" title="statement not covered" >user.</span>avatar) {
-      const <span class="cstat-no" title="statement not covered" >userAvatarFilePath = path.join(uploadConfig.directory, user.avatar);</span>
-      const <span class="cstat-no" title="statement not covered" >userAvatarFileExists = <span class="cstat-no" title="statement not covered" >await fs.promises.stat(userAvatarFilePath);</span></span>
+    const <span class="cstat-no" title="statement not covered" >passwordMatch = <span class="cstat-no" title="statement not covered" >await compare(password, user.password);</span></span>
 &nbsp;
-      if (<span class="cstat-no" title="statement not covered" >userAvatarFileExists)</span> {
-<span class="cstat-no" title="statement not covered" >        await fs.promises.unlink(userAvatarFilePath);</span>
-      }
+<span class="cstat-no" title="statement not covered" >    if (!passwordMatch) {</span>
+<span class="cstat-no" title="statement not covered" >      throw new AppError('Incorret email/password combination.', 401);</span>
     }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    user.avatar = avatarFileName;</span>
+    const <span class="cstat-no" title="statement not covered" >{ secret, expiresIn } = a</span>uth.jwt;
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    await this.usersRepository.save(user);</span>
+    const <span class="cstat-no" title="statement not covered" >token = sign({}, secret, {</span>
+      subject: user.id,
+      expiresIn,
+    });
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    return user;</span>
+<span class="cstat-no" title="statement not covered" >    return { user, token };</span>
   }
 <span class="cstat-no" title="statement not covered" >}</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >export default UpdateUserAvatarService;</span>
+<span class="cstat-no" title="statement not covered" >export default AuthenticateUserService;</span>
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -199,7 +208,7 @@ interface IRequest {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Sat May 23 2020 20:13:35 GMT-0300 (GMT-03:00)
+                at Sat May 23 2020 20:27:00 GMT-0300 (GMT-03:00)
             </div>
         </div>
         <script src="../../prettify.js"></script>
