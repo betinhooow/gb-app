@@ -4,14 +4,19 @@ import { sign } from 'jsonwebtoken';
 import User from '@modules/users/infra/typeorm/entities/User';
 import auth from '@config/auth';
 import AppError from '@shared/error/AppError';
+import { inject, injectable } from 'tsyringe';
 
 interface IRequest {
   email: string;
   password: string;
 }
 
+@injectable()
 class AuthenticateUserService {
-  constructor(private usersRepository: IUsersRepository) {}
+  constructor(
+    @inject('UsersRepository')
+    private usersRepository: IUsersRepository,
+  ) {}
 
   public async execute({
     email,
