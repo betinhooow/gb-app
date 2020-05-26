@@ -1,10 +1,8 @@
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
-import { EntityRepository } from 'typeorm';
 import ICreateUserDTO from '@modules/users/dtos/ICreateUserDTO';
 import User from '@modules/users/infra/typeorm/entities/User';
 import { uuid } from 'uuidv4';
 
-@EntityRepository(User)
 class MockUsersRepository implements IUsersRepository {
   private users: User[] = [];
 
