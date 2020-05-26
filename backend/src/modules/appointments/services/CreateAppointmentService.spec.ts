@@ -4,7 +4,7 @@ import CreateAppointmentService from './CreateAppointmentService';
 import MockAppointmentsRepository from '../repositories/mocks/MockAppointmentsRepository';
 
 describe('CreateAppointment', () => {
-  it('should be abble to create a new appointment', async () => {
+  it('should be able to create a new appointment', async () => {
     const mockAppointmentsRepository = new MockAppointmentsRepository();
 
     const createAppointmentService = new CreateAppointmentService(

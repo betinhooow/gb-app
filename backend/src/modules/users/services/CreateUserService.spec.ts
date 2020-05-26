@@ -5,7 +5,7 @@ import CreateUserService from './CreateUserService';
 import MockHashProvider from '../providers/HashProvider/mocks/MockHashProvider';
 
 describe('CreateUser', () => {
-  it('should be abble to create a new user', async () => {
+  it('should be able to create a new user', async () => {
     const mockUsersRepository = new MockUsersRepository();
     const mockHashProvider = new MockHashProvider();
 
@@ -23,7 +23,7 @@ describe('CreateUser', () => {
     expect(user).toHaveProperty('id');
   });
 
-  it('should not be abble to create a new user with same email from another', async () => {
+  it('should not be able to create a new user with same email from another', async () => {
     const mockUsersRepository = new MockUsersRepository();
     const mockHashProvider = new MockHashProvider();
 
