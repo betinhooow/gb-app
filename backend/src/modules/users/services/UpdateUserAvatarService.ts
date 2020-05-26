@@ -27,7 +27,7 @@ class UpdateUserAvatarService {
     }
 
     if (user.avatar) {
-      await this.storageProvider.deleteFile(avatarFileName);
+      await this.storageProvider.deleteFile(user.avatar);
     }
 
     const fileName = await this.storageProvider.saveFile(avatarFileName);
