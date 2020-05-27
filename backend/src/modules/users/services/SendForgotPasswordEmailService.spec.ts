@@ -32,7 +32,7 @@ describe('SendForgotPasswordEmail', () => {
       password: '123456',
     });
 
-    sendForgotPasswordEmail.execute({ email: 'johndoe@example.com' });
+    await sendForgotPasswordEmail.execute({ email: 'johndoe@example.com' });
 
     expect(sendMail).toHaveBeenCalled();
   });
