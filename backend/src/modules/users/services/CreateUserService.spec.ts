@@ -4,16 +4,22 @@ import MockUsersRepository from '../repositories/mocks/MockUsersRepository';
 import CreateUserService from './CreateUserService';
 import MockHashProvider from '../providers/HashProvider/mocks/MockHashProvider';
 
-describe('CreateUser', () => {
-  it('should be able to create a new user', async () => {
-    const mockUsersRepository = new MockUsersRepository();
-    const mockHashProvider = new MockHashProvider();
+let mockUsersRepository: MockUsersRepository;
+let mockHashProvider: MockHashProvider;
+let createUserService: CreateUserService;
 
-    const createUserService = new CreateUserService(
+describe('CreateUser', () => {
+  beforeEach(() => {
+    mockUsersRepository = new MockUsersRepository();
+    mockHashProvider = new MockHashProvider();
+
+    createUserService = new CreateUserService(
       mockUsersRepository,
       mockHashProvider,
     );
+  });
 
+  it('should be able to create a new user', async () => {
     const user = await createUserService.execute({
       name: 'John Doe',
       email: 'johndoe@example.com',
@@ -24,14 +30,6 @@ describe('CreateUser', () => {
   });
 
   it('should not be able to create a new user with same email from another', async () => {
-    const mockUsersRepository = new MockUsersRepository();
-    const mockHashProvider = new MockHashProvider();
-
-    const createUserService = new CreateUserService(
-      mockUsersRepository,
-      mockHashProvider,
-    );
-
     await createUserService.execute({
       name: 'John Doe',
       email: 'johndoe@example.com',

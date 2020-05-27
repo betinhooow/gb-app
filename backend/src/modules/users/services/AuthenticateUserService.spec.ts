@@ -5,20 +5,27 @@ import CreateUserService from './CreateUserService';
 import AuthenticateUserService from './AuthenticateUserService';
 import MockHashProvider from '../providers/HashProvider/mocks/MockHashProvider';
 
+let mockUsersRepository: MockUsersRepository;
+let mockHashProvider: MockHashProvider;
+let createUserService: CreateUserService;
+let authenticateUserService: AuthenticateUserService;
+
 describe('AuthenticateUserService', () => {
+  beforeEach(() => {
+    mockUsersRepository = new MockUsersRepository();
+    mockHashProvider = new MockHashProvider();
+
+    createUserService = new CreateUserService(
+      mockUsersRepository,
+      mockHashProvider,
+    );
+    authenticateUserService = new AuthenticateUserService(
+      mockUsersRepository,
+      mockHashProvider,
+    );
+  });
+
   it('should be able to authenticate', async () => {
-    const mockUsersRepository = new MockUsersRepository();
-    const mockHashProvider = new MockHashProvider();
-
-    const createUserService = new CreateUserService(
-      mockUsersRepository,
-      mockHashProvider,
-    );
-    const authenticateUserService = new AuthenticateUserService(
-      mockUsersRepository,
-      mockHashProvider,
-    );
-
     const user = await createUserService.execute({
       name: 'John Doe',
       email: 'johndoe@example.com',
@@ -35,14 +42,6 @@ describe('AuthenticateUserService', () => {
   });
 
   it('should not be able to authenticate with a non existing user', async () => {
-    const mockUsersRepository = new MockUsersRepository();
-    const mockHashProvider = new MockHashProvider();
-
-    const authenticateUserService = new AuthenticateUserService(
-      mockUsersRepository,
-      mockHashProvider,
-    );
-
     await expect(
       authenticateUserService.execute({
         email: 'johndoe@example.com',
@@ -52,18 +51,6 @@ describe('AuthenticateUserService', () => {
   });
 
   it('should not be able to authenticate with incorrect email or passowrd', async () => {
-    const mockUsersRepository = new MockUsersRepository();
-    const mockHashProvider = new MockHashProvider();
-
-    const createUserService = new CreateUserService(
-      mockUsersRepository,
-      mockHashProvider,
-    );
-    const authenticateUserService = new AuthenticateUserService(
-      mockUsersRepository,
-      mockHashProvider,
-    );
-
     await createUserService.execute({
       name: 'John Doe',
       email: 'johndoe@example.com',

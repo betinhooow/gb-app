@@ -4,16 +4,22 @@ import AppError from '@shared/error/AppError';
 import MockUsersRepository from '../repositories/mocks/MockUsersRepository';
 import UpdateUserAvatarService from './UpdateUserAvatarService';
 
-describe('UpdateUserAvatarService', () => {
-  it('should be able to create a new user', async () => {
-    const mockUsersRepository = new MockUsersRepository();
-    const mockDiskStorageProvider = new MockDiskStorageProvider();
+let mockUsersRepository: MockUsersRepository;
+let mockDiskStorageProvider: MockDiskStorageProvider;
+let updateUserAvatar: UpdateUserAvatarService;
 
-    const updateUserAvatar = new UpdateUserAvatarService(
+describe('UpdateUserAvatarService', () => {
+  beforeEach(() => {
+    mockUsersRepository = new MockUsersRepository();
+    mockDiskStorageProvider = new MockDiskStorageProvider();
+
+    updateUserAvatar = new UpdateUserAvatarService(
       mockUsersRepository,
       mockDiskStorageProvider,
     );
+  });
 
+  it('should be able to create a new user', async () => {
     const user = await mockUsersRepository.create({
       name: 'John Doe',
       email: 'johndoe@example.com',
@@ -29,14 +35,6 @@ describe('UpdateUserAvatarService', () => {
   });
 
   it('should not be able to update avatar from a non existing user', async () => {
-    const mockUsersRepository = new MockUsersRepository();
-    const mockDiskStorageProvider = new MockDiskStorageProvider();
-
-    const updateUserAvatar = new UpdateUserAvatarService(
-      mockUsersRepository,
-      mockDiskStorageProvider,
-    );
-
     await expect(
       updateUserAvatar.execute({
         user_id: 'non-existing-user',
@@ -46,15 +44,7 @@ describe('UpdateUserAvatarService', () => {
   });
 
   it('should delete old avatar when updating new one', async () => {
-    const mockUsersRepository = new MockUsersRepository();
-    const mockDiskStorageProvider = new MockDiskStorageProvider();
-
     const deleteFile = jest.spyOn(mockDiskStorageProvider, 'deleteFile');
-
-    const updateUserAvatar = new UpdateUserAvatarService(
-      mockUsersRepository,
-      mockDiskStorageProvider,
-    );
 
     const user = await mockUsersRepository.create({
       name: 'John Doe',
