@@ -36,6 +36,16 @@ describe('UpdateProfileService', () => {
     expect(updatedUser.email).toBe('johntre@example.com');
   });
 
+  it('should be able to show the profile from non-existing profile', async () => {
+    expect(
+      updateProfileService.execute({
+        user_id: 'non-existing-user-id',
+        name: 'non-existing-user-name',
+        email: 'non-existing-user-email',
+      }),
+    ).rejects.toBeInstanceOf(AppError);
+  });
+
   it('should not be able to update the email to an existing email', async () => {
     await mockUsersRepository.create({
       name: 'John Doe',
