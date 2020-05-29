@@ -16,6 +16,6 @@ export default class AppointmentsController {
       provider_id,
     });
 
-    return response.json({ appointment });
+    return response.json(appointment);
   }
 }
