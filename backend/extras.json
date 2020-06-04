@@ -3,5 +3,8 @@
     "create": "yarn typeorm migration:create -n MigrationName",
     "run": "yarn typeorm migration:run",
     "revert": "yarn typeorm migration:revert"
+  },
+  "mongodb": {
+    "container": "docker run --name mongodb -p 27017:27017 -d -t mongo"
   }
 }
