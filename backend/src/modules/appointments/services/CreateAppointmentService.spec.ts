@@ -1,17 +1,21 @@
 import 'reflect-metadata';
 import AppError from '@shared/error/AppError';
+import MockNotificationsRepository from '@modules/notifications/repositories/mocks/MockNotificationsRepository';
 import CreateAppointmentService from './CreateAppointmentService';
 import MockAppointmentsRepository from '../repositories/mocks/MockAppointmentsRepository';
 
 let mockAppointmentsRepository: MockAppointmentsRepository;
+let mockNotificationRepository: MockNotificationsRepository;
 let createAppointmentService: CreateAppointmentService;
 
 describe('CreateAppointment', () => {
   beforeEach(() => {
     mockAppointmentsRepository = new MockAppointmentsRepository();
+    mockNotificationRepository = new MockNotificationsRepository();
 
     createAppointmentService = new CreateAppointmentService(
       mockAppointmentsRepository,
+      mockNotificationRepository,
     );
   });
 
