@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 import AppError from '@shared/error/AppError';
+import MockCacheProvider from '@shared/container/providers/CacheProvider/mocks/MockCacheProvider';
 import MockUsersRepository from '../repositories/mocks/MockUsersRepository';
 import CreateUserService from './CreateUserService';
 import AuthenticateUserService from './AuthenticateUserService';
@@ -7,6 +8,7 @@ import MockHashProvider from '../providers/HashProvider/mocks/MockHashProvider';
 
 let mockUsersRepository: MockUsersRepository;
 let mockHashProvider: MockHashProvider;
+let mockCacheProvider: MockCacheProvider;
 let createUserService: CreateUserService;
 let authenticateUserService: AuthenticateUserService;
 
@@ -14,10 +16,12 @@ describe('AuthenticateUserService', () => {
   beforeEach(() => {
     mockUsersRepository = new MockUsersRepository();
     mockHashProvider = new MockHashProvider();
+    mockCacheProvider = new MockCacheProvider();
 
     createUserService = new CreateUserService(
       mockUsersRepository,
       mockHashProvider,
+      mockCacheProvider,
     );
     authenticateUserService = new AuthenticateUserService(
       mockUsersRepository,

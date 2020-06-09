@@ -1,15 +1,19 @@
 import 'reflect-metadata';
+import MockCacheProvider from '@shared/container/providers/CacheProvider/mocks/MockCacheProvider';
 import ListProviderAppointmentService from './ListProviderAppointmentService';
 import MockAppointmentsRepository from '../repositories/mocks/MockAppointmentsRepository';
 
 let mockAppointmentsRepository: MockAppointmentsRepository;
+let mockCacheProvider: MockCacheProvider;
 let listProviderAppointmentService: ListProviderAppointmentService;
 
 describe('LisrProviderAppointment', () => {
   beforeEach(() => {
     mockAppointmentsRepository = new MockAppointmentsRepository();
+    mockCacheProvider = new MockCacheProvider();
     listProviderAppointmentService = new ListProviderAppointmentService(
       mockAppointmentsRepository,
+      mockCacheProvider,
     );
   });
 
