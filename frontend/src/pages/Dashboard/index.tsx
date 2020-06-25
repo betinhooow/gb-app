@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FiPower, FiClock } from 'react-icons/fi';
 import logoImg from '../../assets/icons/logo.svg';
 import {
@@ -9,11 +9,14 @@ import {
   Content,
   Schedule,
   Calendar,
-  NextAppointment
+  NextAppointment,
+  Section,
+  Appointment,
 } from './styles';
 import { useAuth } from '../../hooks/auth';
 
 const Dashboard: React.FC = () => {
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const { signOut, user } = useAuth();
 
   return (
@@ -59,6 +62,71 @@ const Dashboard: React.FC = () => {
               </span>
             </div>
           </NextAppointment>
+
+          <Section>
+            <strong>Manhã</strong>
+
+            <Appointment>
+              <span>
+                <FiClock />
+                08:00
+              </span>
+
+              <div>
+              <img
+                src="https://cdn.discordapp.com/avatars/560843572358676483/233f6b8b8a689b5088682f3fb1b8a2fe?size=512"
+                alt="name"
+              />
+              <strong>Roberto Nobre</strong>
+              </div>
+            </Appointment>
+            <Appointment>
+              <span>
+                <FiClock />
+                08:00
+              </span>
+
+              <div>
+              <img
+                src="https://cdn.discordapp.com/avatars/560843572358676483/233f6b8b8a689b5088682f3fb1b8a2fe?size=512"
+                alt="name"
+              />
+              <strong>Roberto Nobre</strong>
+              </div>
+            </Appointment>
+          </Section>
+
+          <Section>
+            <strong>Tarde</strong>
+            <Appointment>
+              <span>
+                <FiClock />
+                08:00
+              </span>
+
+              <div>
+              <img
+                src="https://cdn.discordapp.com/avatars/560843572358676483/233f6b8b8a689b5088682f3fb1b8a2fe?size=512"
+                alt="name"
+              />
+              <strong>Roberto Nobre</strong>
+              </div>
+            </Appointment>
+            <Appointment>
+              <span>
+                <FiClock />
+                08:00
+              </span>
+
+              <div>
+              <img
+                src="https://cdn.discordapp.com/avatars/560843572358676483/233f6b8b8a689b5088682f3fb1b8a2fe?size=512"
+                alt="name"
+              />
+              <strong>Roberto Nobre</strong>
+              </div>
+            </Appointment>
+          </Section>
         </Schedule>
         <Calendar />
       </Content>
