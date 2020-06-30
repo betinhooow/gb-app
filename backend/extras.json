@@ -5,12 +5,15 @@
     "revert": "yarn typeorm migration:revert"
   },
   "mongodb": {
-    "container": "docker run --name mongodb -p 27017:27017 -d -t mongo"
+    "container": "docker run --name mongodb -p 27017:27017 -d -t mongo",
+    "prd": "docker run -d --name mongodb -e MONGODB_USERNAME=gobarber -e MONGODB_PASSWORD=mongopass -e MONGODB_DATABASE=gobarber -p 47017:27017 bitnami/mongodb:latest"
   },
   "redis": {
-    "container": "docker run --name redis -p 6379:6379 -d -t redis:alpine"
+    "container": "docker run --name redis -p 6379:6379 -d -t redis:alpine",
+    "prd": "docker run -d --name redis -e REDIS_PASSWORD=redispass -p 56379:6379 bitnami/redis:latest"
   },
   "postgres": {
-    "container": "docker run --name postgres -e POSTGRES_PASSWORD=docker -p 5432:5432 -d postgres"
+    "container": "docker run --name postgres -e POSTGRES_PASSWORD=docker -p 5432:5432 -d postgres",
+    "prd": "docker run -d --name postgresql -e POSTGRESQL_PASSWORD=docker_prod -e POSTGRESQL_USERNAME=postgres -e POSTGRESQL_DATABASE=postgres -p 35432:5432 bitnami/postgresql:latest"
   }
 }
