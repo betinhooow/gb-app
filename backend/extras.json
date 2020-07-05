@@ -15,5 +15,8 @@
   "postgres": {
     "container": "docker run --name postgres -e POSTGRES_PASSWORD=docker -p 5432:5432 -d postgres",
     "prd": "docker run -d --name postgresql -e POSTGRESQL_PASSWORD=docker_prod -e POSTGRESQL_USERNAME=postgres -e POSTGRESQL_DATABASE=postgres -p 35432:5432 bitnami/postgresql:latest"
+  },
+  "prod": {
+    "keep-containers-alive": "docker update --restart=unless-stopped [container-id]"
   }
 }
