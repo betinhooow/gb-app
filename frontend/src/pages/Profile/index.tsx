@@ -43,14 +43,13 @@ const Profile: React.FC = () => {
             then: Yup.string().required('Campo obrigatório'),
             otherwise: Yup.string(),
           }),
-          password_confirmation: Yup.string().when('old_password', {
-            is: val => !!val.length,
-            then: Yup.string().required('Campo obrigatório'),
-            otherwise: Yup.string(),
-          }).oneOf(
-            [Yup.ref('password'), null],
-            'Confirmação incorreta'
-          ),
+          password_confirmation: Yup.string()
+            .when('old_password', {
+              is: val => !!val.length,
+              then: Yup.string().required('Campo obrigatório'),
+              otherwise: Yup.string(),
+            })
+            .oneOf([Yup.ref('password'), null], 'Confirmação incorreta'),
         });
 
         await schema.validate(data, {
@@ -58,18 +57,24 @@ const Profile: React.FC = () => {
         });
 
         const {
-          name, email, old_password, password, password_confirmation
-        } = data;
-
-        const formData = Object.assign({
           name,
           email,
-          ...(old_password ? {
           old_password,
           password,
           password_confirmation,
-        } : {}),
-      });
+        } = data;
+
+        const formData = {
+          name,
+          email,
+          ...(old_password
+            ? {
+                old_password,
+                password,
+                password_confirmation,
+              }
+            : {}),
+        };
 
         const response = await API.put('/profile', formData);
 
@@ -97,40 +102,46 @@ const Profile: React.FC = () => {
         });
       }
     },
-    [addToast, history],
+    [addToast, history, updateUser],
   );
 
   const handleChangeAvatar = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
-      if(e.target.files){
+      if (e.target.files) {
         const data = new FormData();
 
         data.append('avatar', e.target.files[0]);
 
-        API.patch('/users/avatar', data).then((response) => {
-          updateUser(response.data)
+        API.patch('/users/avatar', data).then(response => {
+          updateUser(response.data);
 
           addToast({
             type: 'success',
             title: 'Sucesso!',
-            description: "Avatar atualizado!"
-          })
+            description: 'Avatar atualizado!',
+          });
         });
       }
     },
-    [addToast]
+    [addToast, updateUser],
   );
 
   return (
     <Container>
       <header>
-        <Link to="dashboard"><FiArrowLeft /></Link>
+        <Link to="dashboard">
+          <FiArrowLeft />
+        </Link>
       </header>
       <Content>
-        <Form ref={formRef} initialData={{
-          name: user.name,
-          email: user.email,
-        }} onSubmit={handleSubmit}>
+        <Form
+          ref={formRef}
+          initialData={{
+            name: user.name,
+            email: user.email,
+          }}
+          onSubmit={handleSubmit}
+        >
           <AvatarInput>
             <img src={user.avatar_url} alt={user.name} />
             <label htmlFor="avatar">
