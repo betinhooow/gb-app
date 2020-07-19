@@ -1,11 +1,10 @@
 import styled from 'styled-components';
 import { shade } from 'polished';
-import signUpBackgroundImage from '../../assets/images/sign-up-background.png';
 
 export const Container = styled.div`
   > header {
     height: 144px;
-    background: #28262E;
+    background: #28262e;
 
     display: flex;
     align-items: center;
@@ -58,7 +57,7 @@ export const Content = styled.div`
       }
     }
 
-    input[name='old_password']{
+    input[name='old_password'] {
       margin-top: 24px;
     }
   }
@@ -102,7 +101,7 @@ export const AvatarInput = styled.div`
     }
 
     &:hover {
-      background: ${shade(0.2, '#ff9000')}
+      background: ${shade(0.2, '#ff9000')};
     }
   }
-`
+`;
