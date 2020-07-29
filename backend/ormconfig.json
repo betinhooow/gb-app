@@ -5,7 +5,7 @@
     "host": "localhost",
     "port": 5432,
     "username": "postgres",
-    "password": "docker",
+    "password": "docker_prod",
     "database": "postgres",
     "entities": ["./dist/modules/**/infra/typeorm/entities/*.js"],
     "migrations": ["./dist/shared/infra/typeorm/migrations/*.js"],
