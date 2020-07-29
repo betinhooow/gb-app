@@ -8,7 +8,7 @@ var _typeorm = require("typeorm");
   "host": "localhost",
   "port": 5432,
   "username": "postgres",
-  "password": "docker",
+  "password": "docker_prod",
   "database": "postgres",
   "entities": [__dirname + "./../../../../dist/modules/**/infra/typeorm/entities/*.js"],
   "migrations": [__dirname + "./../../../../dist/shared/infra/typeorm/migrations/*.js"],
