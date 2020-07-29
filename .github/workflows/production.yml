@@ -1,0 +1,20 @@
+name: CI Master
+
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    name: Node build master
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      TZ: "America/Sao_Paulo"
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: "[SETUP] Install dependencies"
+        working-directory: backend
+        run: npm install
