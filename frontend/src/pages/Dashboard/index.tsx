@@ -1,5 +1,9 @@
 import React, { useState, useCallback, useEffect, useMemo } from 'react';
 import { FiPower, FiClock } from 'react-icons/fi';
+import { isToday, format, parseISO, isAfter } from 'date-fns';
+import ptBr from 'date-fns/locale/pt-BR';
+import DayPicker, { DayModifiers } from 'react-day-picker';
+import { Link } from 'react-router-dom';
 import logoImg from '../../assets/icons/logo.svg';
 import {
   Container,
@@ -13,13 +17,9 @@ import {
   Section,
   Appointment,
 } from './styles';
-import { isToday, format, parseISO, isAfter } from 'date-fns';
-import ptBr from 'date-fns/locale/pt-BR';
 import { useAuth } from '../../hooks/auth';
-import DayPicker, { DayModifiers } from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
 import API from '../../services/api';
-import { Link } from 'react-router-dom';
 
 interface MonthAvailabilityItem {
   day: number;
@@ -33,19 +33,21 @@ interface Appointments {
   user: {
     name: string;
     avatar_url: string;
-  }
+  };
 }
 
 const Dashboard: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [appointments, setAppointments] = useState<Appointments[]>([]);
-  const [monthAvailability, setMonthAvailability] = useState<MonthAvailabilityItem[]>([]);
+  const [monthAvailability, setMonthAvailability] = useState<
+    MonthAvailabilityItem[]
+  >([]);
 
   const { signOut, user } = useAuth();
 
   const handleDayClick = useCallback((day: Date, modifiers: DayModifiers) => {
-    if(modifiers.available && !modifiers.disabled){
+    if (modifiers.available && !modifiers.disabled) {
       setSelectedDate(day);
     }
   }, []);
@@ -58,11 +60,11 @@ const Dashboard: React.FC = () => {
     API.get(`/providers/${user.id}/month-availability`, {
       params: {
         year: currentMonth.getFullYear(),
-        month: currentMonth.getMonth() + 1
-      }
+        month: currentMonth.getMonth() + 1,
+      },
     }).then(response => {
       setMonthAvailability(response.data);
-    })
+    });
   }, [currentMonth, user.id]);
 
   useEffect(() => {
@@ -71,27 +73,27 @@ const Dashboard: React.FC = () => {
         year: selectedDate.getFullYear(),
         month: selectedDate.getMonth() + 1,
         day: selectedDate.getDate(),
-      }
+      },
     }).then(response => {
       const formattedAppointments = response.data.map(appointment => {
         return {
           ...appointment,
-          formattedHour: format(parseISO(appointment.date), 'HH:mm')
-        }
-      })
+          formattedHour: format(parseISO(appointment.date), 'HH:mm'),
+        };
+      });
       setAppointments(formattedAppointments);
     });
   }, [selectedDate]);
 
   const disabledDays = useMemo(() => {
     const dates = monthAvailability
-    .filter(monthDay => monthDay.available === false)
-    .map(monthDay => {
-      const year = currentMonth.getFullYear();
-      const month = currentMonth.getMonth();
+      .filter(monthDay => monthDay.available === false)
+      .map(monthDay => {
+        const year = currentMonth.getFullYear();
+        const month = currentMonth.getMonth();
 
-      return new Date(year, month, monthDay.day);
-    })
+        return new Date(year, month, monthDay.day);
+      });
 
     return dates;
   }, [monthAvailability, currentMonth]);
@@ -136,7 +138,9 @@ const Dashboard: React.FC = () => {
             <img src={user.avatar_url} alt="u" />
             <div>
               <span>Bem vindo,</span>
-              <Link to="/profile"><strong>{user.name}</strong></Link>
+              <Link to="/profile">
+                <strong>{user.name}</strong>
+              </Link>
             </div>
           </Profile>
 
@@ -175,7 +179,7 @@ const Dashboard: React.FC = () => {
           <Section>
             <strong>Manhã</strong>
 
-            {morningAppointments.length === 0 &&  (
+            {morningAppointments.length === 0 && (
               <p>Nenhum agendamento neste período</p>
             )}
 
@@ -200,7 +204,7 @@ const Dashboard: React.FC = () => {
           <Section>
             <strong>Tarde</strong>
 
-            {afternoomAppointments.length === 0 &&  (
+            {afternoomAppointments.length === 0 && (
               <p>Nenhum agendamento neste período</p>
             )}
 
@@ -230,7 +234,7 @@ const Dashboard: React.FC = () => {
             disabledDays={[{ daysOfWeek: [0, 6] }, ...disabledDays]}
             onMonthChange={handleMonthChange}
             modifiers={{
-              available: { daysOfWeek: [1,2,3,4,5]}
+              available: { daysOfWeek: [1, 2, 3, 4, 5] },
             }}
             selectedDays={selectedDate}
             onDayClick={handleDayClick}
@@ -246,9 +250,9 @@ const Dashboard: React.FC = () => {
               'Setembro',
               'Outubro',
               'Novembro',
-              'Dezembro'
+              'Dezembro',
             ]}
-           />
+          />
         </Calendar>
       </Content>
     </Container>

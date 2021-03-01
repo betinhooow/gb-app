@@ -5,12 +5,12 @@
     "host": "localhost",
     "port": 5432,
     "username": "postgres",
-    "password": "docker_prod",
+    "password": "docker",
     "database": "postgres",
-    "entities": ["./dist/modules/**/infra/typeorm/entities/*.js"],
-    "migrations": ["./dist/shared/infra/typeorm/migrations/*.js"],
+    "entities": ["./src/modules/**/infra/typeorm/entities/*.ts"],
+    "migrations": ["./src/shared/infra/typeorm/migrations/*.ts"],
     "cli": {
-      "migrationsDir": "./dist/shared/infra/typeorm/migrations"
+      "migrationsDir": "./src/shared/infra/typeorm/migrations"
     }
   },
   {
